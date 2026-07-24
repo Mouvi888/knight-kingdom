@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Рыцарский указ · Каналы</title>
+    <style>
+        /* ---------- общие ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0b0a0c;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            padding: 1.5rem;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(180, 40, 40, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(200, 60, 60, 0.06) 0%, transparent 45%),
+                linear-gradient(145deg, #0f0e10 0%, #1a1618 100%);
+        }
+
+        .castle {
+            max-width: 960px;
+            width: 100%;
+            padding: 2.4rem 2.8rem 2.8rem 2.8rem;
+            background: rgba(20, 17, 19, 0.55);
+            backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            border-radius: 48px 16px 48px 16px;
+            box-shadow:
+                0 20px 48px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 215, 215, 0.08),
+                0 0 0 1px rgba(180, 60, 60, 0.15);
+            border: 1px solid rgba(200, 70, 70, 0.12);
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .castle::before {
+            content: "⚔";
+            position: absolute;
+            top: -12px;
+            left: 32px;
+            font-size: 1.8rem;
+            color: rgba(200, 80, 80, 0.3);
+            text-shadow: 0 0 12px rgba(200, 50, 50, 0.2);
+            transform: rotate(-8deg);
+            letter-spacing: 6px;
+        }
+
+        .castle::after {
+            content: "🛡";
+            position: absolute;
+            bottom: -10px;
+            right: 28px;
+            font-size: 1.6rem;
+            color: rgba(200, 80, 80, 0.25);
+            text-shadow: 0 0 16px rgba(180, 40, 40, 0.15);
+            transform: rotate(6deg);
+        }
+
+        .castle:hover {
+            box-shadow:
+                0 24px 56px rgba(0, 0, 0, 0.9),
+                inset 0 1px 0 rgba(255, 215, 215, 0.12),
+                0 0 0 1px rgba(200, 70, 70, 0.25),
+                0 0 32px rgba(180, 40, 40, 0.06);
+            transform: translateY(-3px);
+            transition: all 0.3s ease;
+        }
+
+        /* ---------- шапка ---------- */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 0.4rem;
+        }
+
+        .title {
+            font-family: 'Impact', 'Arial Black', 'Franklin Gothic Heavy', sans-serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            letter-spacing: 0.04em;
+            color: #f0e6e6;
+            text-shadow: 0 0 18px rgba(200, 60, 60, 0.25), 0 2px 4px rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .title span {
+            background: linear-gradient(135deg, #d48a8a, #b34a4a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 900;
+            text-shadow: 0 0 24px rgba(200, 50, 50, 0.3);
+            letter-spacing: 0.06em;
+        }
+
+        .title-icon {
+            font-size: 1.6rem;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 8px rgba(200, 60, 60, 0.3));
+            line-height: 1;
+        }
+
+        .subhead {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 0.95rem;
+            color: #a08a8a;
+            letter-spacing: 0.1em;
+            opacity: 0.7;
+            font-style: italic;
+            border-left: 2px solid rgba(200, 80, 80, 0.2);
+            padding-left: 1rem;
+        }
+
+        /* ---------- навигация (табы) ---------- */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 1.6rem 0 0.8rem 0;
+            border-bottom: 1px solid rgba(200, 70, 70, 0.15);
+            padding-bottom: 0.6rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1.4rem;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #9a8686;
+            border-radius: 30px 6px 30px 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .tab-btn:hover {
+            color: #e6d0d0;
+            background: rgba(200, 70, 70, 0.04);
+            border-color: rgba(200, 70, 70, 0.08);
+        }
+
+        .tab-btn.active {
+            color: #f0e6e6;
+            background: rgba(180, 50, 50, 0.08);
+            border-color: rgba(200, 70, 70, 0.2);
+            box-shadow: 0 0 20px rgba(200, 50, 50, 0.04);
+        }
+
+        /* ---------- контент-секции ---------- */
+        .page {
+            display: none;
+            animation: fadeUp 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- общие блоки ---------- */
+        .section-title {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-weight: 400;
+            font-size: 1.2rem;
+            color: #dbb0b0;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin: 1.4rem 0 0.8rem 0;
+            border-left: 3px solid rgba(200, 80, 80, 0.25);
+            padding-left: 1rem;
+            text-shadow: 0 0 12px rgba(200, 50, 50, 0.08);
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* ---------- КЛИКАБЕЛЬНЫЕ КАРТОЧКИ КАНАЛОВ ---------- */
+        .channel-card {
+            display: block;
+            background: rgba(30, 24, 26, 0.35);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 18px 6px 18px 6px;
+            padding: 1rem 1.4rem;
+            border-left: 4px solid rgba(200, 80, 80, 0.25);
+            border-right: 1px solid rgba(200, 70, 70, 0.06);
+            border-top: 1px solid rgba(200, 70, 70, 0.06);
+            border-bottom: 1px solid rgba(200, 70, 70, 0.06);
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .channel-card:hover {
+            border-left-color: #b34a4a;
+            background: rgba(40, 30, 32, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(200, 70, 70, 0.06);
+            transform: translateX(4px);
+        }
+
+        .channel-card .channel-name {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            color: #dbb0b0;
+            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .channel-card .channel-name .tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: rgba(180, 50, 50, 0.08);
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+            border: 1px solid rgba(200, 70, 70, 0.06);
+            color: #8f7a7a;
+            letter-spacing: 0.06em;
+        }
+
+        .channel-card .channel-desc {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 0.9rem;
+            color: #b8a6a6;
+            margin-top: 0.2rem;
+            line-height: 1.4;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ---------- голосовые карточки (тоже кликабельны) ---------- */
+        .voice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .voice-card {
+            display: block;
+            background: rgba(30, 24, 26, 0.3);
+            backdrop-filter: blur(4px);
+            border-radius: 14px 4px 14px 4px;
+            padding: 0.7rem 1rem;
+            border-left: 3px solid rgba(200, 80, 80, 0.2);
+            border-right: 1px solid rgba(200, 70, 70, 0.04);
+            border-top: 1px solid rgba(200, 70, 70, 0.04);
+            border-bottom: 1px solid rgba(200, 70, 70, 0.04);
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .voice-card:hover {
+            border-left-color: #b34a4a;
+            background: rgba(40, 30, 32, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .voice-card .name {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-weight: 400;
+            font-size: 0.95rem;
+            color: #dbb0b0;
+            letter-spacing: 0.04em;
+        }
+
+        .voice-card .desc {
+            font-family: 'Georgia', serif;
+            font-size: 0.7rem;
+            color: #9a8686;
+            margin-top: 0.15rem;
+            line-height: 1.3;
+        }
+
+        /* ---------- приватные карточки (тоже кликабельны) ---------- */
+        .priv-card {
+            display: block;
+            background: rgba(30, 24, 26, 0.3);
+            backdrop-filter: blur(4px);
+            border-radius: 18px 6px 18px 6px;
+            padding: 1rem 1.4rem;
+            border-left: 4px solid rgba(200, 150, 80, 0.25);
+            border-right: 1px solid rgba(200, 150, 80, 0.06);
+            border-top: 1px solid rgba(200, 150, 80, 0.06);
+            border-bottom: 1px solid rgba(200, 150, 80, 0.06);
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .priv-card:hover {
+            border-left-color: #b38a4a;
+            background: rgba(40, 35, 28, 0.4);
+            transform: translateX(4px);
+        }
+
+        .priv-card .channel-name {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            color: #dbb88a;
+            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .priv-card .channel-name .tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: rgba(180, 150, 50, 0.08);
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+            border: 1px solid rgba(200, 150, 80, 0.06);
+            color: #8f7a6a;
+            letter-spacing: 0.06em;
+        }
+
+        .priv-card .channel-desc {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 0.9rem;
+            color: #b8a68a;
+            margin-top: 0.2rem;
+            line-height: 1.4;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ---------- подвал ---------- */
+        .footer-note {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 2.2rem;
+            gap: 0.8rem;
+            color: #8f7a7a;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-top: 1px solid rgba(200, 70, 70, 0.15);
+            padding-top: 1.4rem;
+        }
+
+        .footer-note .seal {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(180, 50, 50, 0.08);
+            padding: 0.3rem 1rem 0.3rem 0.8rem;
+            border-radius: 40px;
+            border: 1px solid rgba(200, 70, 70, 0.15);
+            backdrop-filter: blur(4px);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .footer-note .seal i {
+            font-size: 1.1rem;
+            filter: drop-shadow(0 0 6px rgba(200, 50, 50, 0.3));
+        }
+
+        .accent-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #b34a4a;
+            border-radius: 50%;
+            margin: 0 8px 0 4px;
+            box-shadow: 0 0 12px #b34a4a55, inset 0 0 4px #ffb0b0;
+        }
+
+        .corner-ornament {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 0.75rem;
+            color: rgba(200, 80, 80, 0.15);
+            letter-spacing: 2px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-family: 'Georgia', serif;
+            opacity: 0.4;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .placeholder-text {
+            color: #6a5a5a;
+            font-style: italic;
+            font-family: 'Georgia', serif;
+            font-size: 0.9rem;
+            padding: 0.8rem 0;
+            border-top: 1px dashed rgba(200, 70, 70, 0.08);
+            margin-top: 0.4rem;
+        }
+
+        /* ---------- адаптив ---------- */
+        @media (max-width: 700px) {
+            .castle {
+                padding: 1.8rem 1.2rem;
+                border-radius: 32px 8px 32px 8px;
+            }
+            .title {
+                font-size: 1.7rem;
+            }
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                flex-direction: column;
+                gap: 0.2rem;
+            }
+            .tabs {
+                gap: 0.2rem;
+            }
+            .tab-btn {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.9rem;
+            }
+            .footer-note {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.6rem;
+            }
+            .castle::before,
+            .castle::after {
+                font-size: 1.2rem;
+            }
+            .castle::before {
+                top: -8px;
+                left: 16px;
+            }
+            .castle::after {
+                bottom: -6px;
+                right: 14px;
+            }
+            .voice-grid {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            }
+        }
+
+        @media (max-width: 420px) {
+            .title {
+                font-size: 1.4rem;
+            }
+            .title-icon {
+                font-size: 1.2rem;
+            }
+            .channel-card .channel-name {
+                font-size: 0.9rem;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            background: #161213;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #682e2e;
+            border-radius: 12px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8f3a3a;
+        }
+    </style>
+</head>
+<body>
+    <div class="castle">
+        <div class="corner-ornament">⚜ ⚜ ⚜</div>
+
+        <!-- шапка -->
+        <div class="header">
+            <div class="title">
+                <span class="title-icon">🗡</span>
+                <span>Рыцарский</span> указ
+                <span style="font-size: 1.2rem; margin-left: 0.1rem;">🛡</span>
+            </div>
+            <div class="subhead">каналы &amp; залы</div>
+        </div>
+
+        <!-- навигация -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="channels">🏰 Каналы</button>
+            <button class="tab-btn" data-tab="roles">⚔ Роли</button>
+        </div>
+
+        <!-- ============ СТРАНИЦА "КАНАЛЫ" ============ -->
+        <div id="tab-channels" class="page active">
+
+            <!-- === ИНФОРМАЦИЯ === -->
+            <div class="section-title">📜 Информация</div>
+            <div class="grid-2col">
+                <a href="https://discord.com/channels/1224785949909716992/1224786093728075776" class="channel-card" target="_blank">
+                    <div class="channel-name">#правила <span class="tag">общий</span></div>
+                    <div class="channel-desc">Общий канал с правилами сервера.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1529995351115694341" class="channel-card" target="_blank">
+                    <div class="channel-name">#информация <span class="tag">общий</span></div>
+                    <div class="channel-desc">Канал с информацией о сервере.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1224786095728889906" class="channel-card" target="_blank">
+                    <div class="channel-name">#новости <span class="tag">общий</span></div>
+                    <div class="channel-desc">Новостник сервера.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1224786097691820073" class="channel-card" target="_blank">
+                    <div class="channel-name">#набор <span class="tag">общий</span></div>
+                    <div class="channel-desc">Канал для подачи заявки в администрацию.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1529944016286646302" class="channel-card" style="grid-column: span 2;" target="_blank">
+                    <div class="channel-name">#помощь-жалобы <span class="tag">общий</span></div>
+                    <div class="channel-desc">Канал для подачи жалоб и помощи от администрации.</div>
+                </a>
+            </div>
+
+            <!-- === ЧАТЫ === -->
+            <div class="section-title">💬 Чаты</div>
+            <div class="grid-2col">
+                <a href="https://discord.com/channels/1224785949909716992/1224786103152676965" class="channel-card" target="_blank">
+                    <div class="channel-name">#чат <span class="tag">общий</span></div>
+                    <div class="channel-desc">Основной чат для общения.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1529941231801467122" class="channel-card" target="_blank">
+                    <div class="channel-name">#знакомства <span class="tag">общий</span></div>
+                    <div class="channel-desc">Канал для новых знакомств.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1224786108433563790" class="channel-card" style="grid-column: span 2;" target="_blank">
+                    <div class="channel-name">#флуд <span class="tag">общий</span></div>
+                    <div class="channel-desc">Канал для свободного общения (в рамках правил).</div>
+                </a>
+            </div>
+
+            <!-- === РАЗВЛЕЧЕНИЯ === -->
+            <div class="section-title">🎮 Развлечения</div>
+            <div class="grid-2col">
+                <a href="https://discord.com/channels/1224785949909716992/1224786111268917300" class="channel-card" target="_blank">
+                    <div class="channel-name">#медиа <span class="tag">общий</span></div>
+                    <div class="channel-desc">Канал для отправки картинок и медиа.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1529984913812754503" class="channel-card" target="_blank">
+                    <div class="channel-name">#поиск-тиммейтов <span class="tag">общий</span></div>
+                    <div class="channel-desc">Канал для поиска тиммейтов в игры.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1224786115308032120" class="channel-card" target="_blank">
+                    <div class="channel-name">#фото <span class="tag">общий</span></div>
+                    <div class="channel-desc">Канал для публикации фотографий.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1529984664226500788" class="channel-card" target="_blank">
+                    <div class="channel-name">#мемы <span class="tag">общий</span></div>
+                    <div class="channel-desc">Канал для мемов.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1224786118528991364" class="channel-card" style="grid-column: span 2;" target="_blank">
+                    <div class="channel-name">#считалочка <span class="tag">общий</span></div>
+                    <div class="channel-desc">Канал со считалочкой.</div>
+                </a>
+            </div>
+
+            <!-- === БЛОГИ === -->
+            <div class="section-title">📝 Блоги</div>
+            <div class="grid-2col">
+                <a href="https://discord.com/channels/1224785949909716992/1529945777483284540" class="channel-card" style="grid-column: span 2;" target="_blank">
+                    <div class="channel-name">#информация <span class="tag">блоги</span></div>
+                    <div class="channel-desc">Информация о блогах.</div>
+                </a>
+            </div>
+
+            <!-- === ГОЛОСОВЫЕ === -->
+            <div class="section-title">🎙️ Голосовые</div>
+            <div class="voice-grid">
+                <a href="https://discord.com/channels/1224785949909716992/1225442320850096219" class="voice-card" target="_blank">
+                    <div class="name">1x1</div>
+                    <div class="desc">Канал для общения 2 людей</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1224786247268962425" class="voice-card" target="_blank">
+                    <div class="name">2x2</div>
+                    <div class="desc">Канал для общения 4 людей</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1224786251073192027" class="voice-card" target="_blank">
+                    <div class="name">5x5</div>
+                    <div class="desc">Канал для общения 10 людей</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1529961766786826460" class="voice-card" target="_blank">
+                    <div class="name">курилка</div>
+                    <div class="desc">Lo-Fi радио для отдыха</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1224786258015031368" class="voice-card" target="_blank">
+                    <div class="name">15x15</div>
+                    <div class="desc">Канал на 30 человек</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1224786261840105584" class="voice-card" target="_blank">
+                    <div class="name">25x25</div>
+                    <div class="desc">Канал на 50 человек</div>
+                </a>
+            </div>
+
+            <!-- === ПРИВАТНЫЕ КОМНАТЫ === -->
+            <div class="section-title">🔒 Приватные комнаты</div>
+            <div class="grid-2col">
+                <a href="https://discord.com/channels/1224785949909716992/1529975273666252953" class="priv-card" target="_blank">
+                    <div class="channel-name">Управление <span class="tag">приватные</span></div>
+                    <div class="channel-desc">Управление приватными голосовыми комнатами.</div>
+                </a>
+                <a href="https://discord.com/channels/1224785949909716992/1529975272412151849" class="priv-card" target="_blank">
+                    <div class="channel-name">ПРЫГНУТЬ В ДРУГОЕ ИЗМЕРЕНИЕ <span class="tag">приватные</span></div>
+                    <div class="channel-desc">Канал для создания приватной комнаты.</div>
+                </a>
+            </div>
+
+            <div class="placeholder-text">
+                ✦ <strong>Примечание:</strong> Приватные комнаты создаются автоматически при входе в канал «ПРЫГНУТЬ В ДРУГОЕ ИЗМЕРЕНИЕ». Управление доступно в канале «Управление».
+            </div>
+        </div>
+
+        <!-- ============ СТРАНИЦА "РОЛИ" ============ -->
+        <div id="tab-roles" class="page">
+            <div class="section-title">👑 Власть &amp; управление</div>
+            <div class="grid-2col">
+                <div class="channel-card" style="border-left-color: #b34a4a; cursor: default;">
+                    <div class="channel-name" style="color: #ecc2c2;">👑 Король <span class="tag">владелец</span></div>
+                    <div class="channel-desc">Верховный правитель сервера. Принимает стратегические решения, назначает наследников и обладает последним словом в любом споре.</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #b34a4a; cursor: default;">
+                    <div class="channel-name" style="color: #ecc2c2;">👑 Принц <span class="tag">заместитель</span></div>
+                    <div class="channel-desc">Правая рука Короля. Управляет сервером в отсутствие владельца, координирует работу администрации и следит за исполнением указов.</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #b34a4a; cursor: default;">
+                    <div class="channel-name" style="color: #ecc2c2;">⚙️ Тех.Админ <span class="tag">технический</span></div>
+                    <div class="channel-desc">Хранитель цифрового замка. Отвечает за ботов, интеграции, безопасность и техническое здоровье сервера.</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #b34a4a; cursor: default;">
+                    <div class="channel-name" style="color: #ecc2c2;">⚔️ Стражник <span class="tag">старший модератор</span></div>
+                    <div class="channel-desc">Главный блюститель порядка. Координирует модераторов, разрешает сложные конфликты и следит за соблюдением кодекса чести.</div>
+                </div>
+            </div>
+
+            <div class="section-title">🛡️ Модерация &amp; поддержка</div>
+            <div class="grid-2col">
+                <div class="channel-card" style="border-left-color: #b38a6a; cursor: default;">
+                    <div class="channel-name" style="color: #dbb88a;">🛡️ Герцог <span class="tag">модератор</span></div>
+                    <div class="channel-desc">Активный страж порядка. Следит за чатами, выдаёт предупреждения и помогает новичкам освоиться.</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #b38a6a; cursor: default;">
+                    <div class="channel-name" style="color: #dbb88a;">🛡️ Барон <span class="tag">младший модератор</span></div>
+                    <div class="channel-desc">Начинающий страж. Помогает старшим коллегам, патрулирует каналы и учится разрешать конфликты.</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #6ab38a; cursor: default;">
+                    <div class="channel-name" style="color: #8adbaa;">💬 Поддержка <span class="tag">тикеты</span></div>
+                    <div class="channel-desc">Голос участников. Отвечает на тикеты, помогает с вопросами, поддерживает дружелюбную атмосферу в общении.</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #b39a6a; cursor: default;">
+                    <div class="channel-name" style="color: #dbba8a;">📢 Пиар-Менеджер <span class="tag">реклама</span></div>
+                    <div class="channel-desc">Глашатай сервера. Занимается продвижением, привлекает новых участников и рассказывает о жизни замка за его пределами.</div>
+                </div>
+            </div>
+
+            <div class="section-title">👥 Сообщество</div>
+            <div class="grid-2col">
+                <div class="channel-card" style="border-left-color: #8a6ab3; cursor: default;">
+                    <div class="channel-name" style="color: #ba8adb;">🏅 Персонал <span class="tag">администрация</span></div>
+                    <div class="channel-desc">Объединяющая роль для всех членов администрации. Дает доступ к служебным каналам и отмечает принадлежность к управлению.</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #b3a34a; cursor: default;">
+                    <div class="channel-name" style="color: #dbd08a;">💰 Купец <span class="tag">бустер</span></div>
+                    <div class="channel-desc">Те, кто поддерживает сервер финансово. Получают особое уважение, доступ к эксклюзивным каналам и золотую отметку.</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #6a7a6a; grid-column: span 2; cursor: default;">
+                    <div class="channel-name" style="color: #aabaaa;">🌾 Крестьянин <span class="tag">участник</span></div>
+                    <div class="channel-desc">Основа любого королевства. Обычные участники сервера — именно ради них существует всё это великолепие. Приветствуются активность и добрососедство.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- подвал -->
+        <div class="footer-note">
+            <div style="display: flex; gap: 0.8rem; align-items: center;">
+                <span style="opacity: 0.5;">✧</span>
+                <span style="font-weight: 300; letter-spacing: 0.1em; background: rgba(200,70,70,0.04); padding: 0.1rem 0.6rem; border-radius: 20px; border: 1px solid rgba(200,70,70,0.06);">
+                    #дискорд-заповедь
+                </span>
+                <span style="opacity: 0.5;">✧</span>
+            </div>
+            <div class="seal">
+                <i>🏰</i>
+                <span style="font-weight: 300; text-transform: lowercase; letter-spacing: 0.03em; color: #bda6a6;">
+                    скреплено печатью
+                </span>
+                <span class="accent-dot"></span>
+                <span style="font-size: 0.7rem; opacity: 0.5; margin-left: 0.2rem;">⚜</span>
+            </div>
+        </div>
+
+        <!-- тонкая неоновая линия -->
+        <div style="position: absolute; bottom: -1px; left: 30%; width: 40%; height: 2px; background: radial-gradient(circle, rgba(200,70,70,0.2) 0%, transparent 80%); border-radius: 100%; filter: blur(2px);"></div>
+    </div>
+
+    <script>
+        (function() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const pages = {
+                channels: document.getElementById('tab-channels'),
+                roles: document.getElementById('tab-roles')
+            };
+
+            function activateTab(tabId) {
+                Object.values(pages).forEach(p => p.classList.remove('active'));
+                if (pages[tabId]) pages[tabId].classList.add('active');
+
+                tabs.forEach(btn => btn.classList.remove('active'));
+                document.querySelector(`.tab-btn[data-tab="${tabId}"]`)?.classList.add('active');
+            }
+
+            tabs.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.dataset.tab;
+                    if (tab) activateTab(tab);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
