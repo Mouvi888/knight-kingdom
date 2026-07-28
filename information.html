@@ -208,6 +208,16 @@
             gap: 1rem;
         }
 
+        .grid-2col-full {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .grid-2col-full .channel-card:last-child:nth-child(odd) {
+            grid-column: span 2;
+        }
+
         /* ---------- КЛИКАБЕЛЬНЫЕ КАРТОЧКИ КАНАЛОВ ---------- */
         .channel-card {
             display: block;
@@ -450,6 +460,9 @@
                 font-size: 1.7rem;
             }
             .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .grid-2col-full {
                 grid-template-columns: 1fr;
             }
             .header {
@@ -747,6 +760,50 @@
                 <div class="channel-card" style="border-left-color: #b39a4a; border-color: #b38a3a; cursor: default; grid-column: span 2;">
                     <div class="channel-name" style="color: #dbca8a;">🌟 Старейшина <span class="tag">уровень 35</span></div>
                     <div class="channel-desc">Мудрейший из мудрых. Хранитель традиций, наставник для всех участников и главный советник администрации. Имеет доступ к чатам администрации.</div>
+                </div>
+            </div>
+
+            <div class="section-title">💰 Экономические роли</div>
+            <div class="grid-2col">
+                <div class="channel-card" style="border-left-color: #d4a84a; cursor: default;">
+                    <div class="channel-name" style="color: #eac87a;">📜 Хранитель Скрижалей <span class="tag">экономика</span></div>
+                    <div class="channel-desc">Давным-давно крестьяне владели даром закреплять вещие слова, но растеряли его в междоусобицах. Лишь легендарный летописец унёс секрет в небытие. Обрети его наследие и вновь пиши на скрижалях истории! <strong>Дает возможность закреплять сообщения в чате.</strong></div>
+                </div>
+                <div class="channel-card" style="border-left-color: #b34a6a; cursor: default;">
+                    <div class="channel-name" style="color: #da6a8a;">🤡 Королевский Шут <span class="tag">экономика</span></div>
+                    <div class="channel-desc">В золотой век любой путник мог рассмешить зал, бросив искромётный стикер или сочный звук. Но король-тиран заточил веселье в темницу, запретив простолюдинам творить хаос. Лишь Шут при дворе владел даром вставлять кастомные образы и громогласные кличи. Стань тем, кто нарушит скуку! <strong>Дает возможность добавлять стикеры, эмодзи и звуки.</strong></div>
+                </div>
+                <div class="channel-card" style="border-left-color: #4ab3a8; cursor: default;">
+                    <div class="channel-name" style="color: #7adaca;">🐦 Птица-Говорун <span class="tag">экономика</span></div>
+                    <div class="channel-desc">В стародавние времена лишь королевские сокольники имели право посылать вести в голосе. Говорят, одну птицу заколдовал старый маг, и она научилась передавать живую речь на расстояние. Стань хозяином говорящей птицы! <strong>Дает возможность писать голосовые сообщения.</strong></div>
+                </div>
+                <div class="channel-card" style="border-left-color: #8a7a4a; cursor: default;">
+                    <div class="channel-name" style="color: #caba6a;">⛏️ Рудник Гномов <span class="tag">экономика</span></div>
+                    <div class="channel-desc">Глубоко под Королевскими горами бородатые мастера веками добывают руду. Лишь тот, кто заключит союз с подгорным народом и выплатит откуп, сможет получать свою долю серебряных жил. Гномы не знают устали - их кирки стучат день и ночь, наполняя твою казну звонкой монетой. <strong>Дает пассивный заработок раз в 3 часа.</strong></div>
+                </div>
+                <div class="channel-card" style="border-left-color: #6a6ab3; cursor: default; grid-column: span 2;">
+                    <div class="channel-name" style="color: #8a8ada;">📢 Зовущий <span class="tag">экономика</span></div>
+                    <div class="channel-desc">В древности каждый крестьянин мог созвать Вече и спросить совета у общины, но тьма раздора забрала у простолюдинов этот дар. Лишь избранные наместники короля владеют магией собирать голоса. Тот, кто обретёт этот титул, сумеет вновь обращаться к народу, задавать вопросы и вершить судьбы королевства через волю его жителей. <strong>Дает возможность создавать опросы.</strong></div>
+                </div>
+            </div>
+
+            <div class="section-title">⏳ Роли за время на сервере</div>
+            <div class="grid-2col">
+                <div class="channel-card" style="border-left-color: #6a8a6a; cursor: default;">
+                    <div class="channel-name" style="color: #8aaa8a;">🚶 Странник <span class="tag">1 месяц</span></div>
+                    <div class="channel-desc">Ты уже начал свой путь в этом королевстве. Первый месяц позади — впереди великие свершения!</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #6a8aaa; cursor: default;">
+                    <div class="channel-name" style="color: #8aaaca;">⚔️ Страж королевства <span class="tag">3 месяца</span></div>
+                    <div class="channel-desc">Ты верно служишь королевству уже 3 месяца. Твоя преданность не остаётся незамеченной.</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #8a6aaa; cursor: default;">
+                    <div class="channel-name" style="color: #aa8aca;">👑 Придворный <span class="tag">6 месяцев</span></div>
+                    <div class="channel-desc">Полгода в кругу верных друзей. Ты стал частью двора и заслужил место среди приближённых.</div>
+                </div>
+                <div class="channel-card" style="border-left-color: #b38a4a; cursor: default;">
+                    <div class="channel-name" style="color: #dbca6a;">📜 Королевский советник <span class="tag">1 год</span></div>
+                    <div class="channel-desc">Целый год ты был с нами. Твоя мудрость и опыт делают тебя ценным советником самого Короля.</div>
                 </div>
             </div>
         </div>
