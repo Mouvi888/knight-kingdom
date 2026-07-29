@@ -25,7 +25,6 @@
         linear-gradient(145deg, #0f0e10 0%, #1a1618 100%);
     }
 
-    /* карточка — стекло с рыцарским налётом */
     .card {
       max-width: 860px;
       width: 100%;
@@ -77,7 +76,6 @@
       transition: all 0.3s ease;
     }
 
-    /* === шапка === */
     .title {
       font-family: 'Impact', 'Arial Black', 'Franklin Gothic Heavy', sans-serif;
       font-weight: 900;
@@ -124,7 +122,6 @@
       font-style: italic;
     }
 
-    /* разделитель */
     .divider {
       width: 100%;
       height: 2px;
@@ -147,7 +144,6 @@
       text-shadow: 0 0 6px rgba(200, 50, 50, 0.2);
     }
 
-    /* === СПИСОК ПРАВИЛ === */
     .rules-list {
       display: flex;
       flex-direction: column;
@@ -268,7 +264,6 @@
       text-shadow: 0 0 8px rgba(200, 50, 50, 0.1);
     }
 
-    /* === низ === */
     .footer-note {
       display: flex;
       justify-content: flex-end;
@@ -325,7 +320,6 @@
       user-select: none;
     }
 
-    /* адаптив */
     @media (max-width: 640px) {
       .card {
         padding: 2rem 1.2rem;
@@ -396,7 +390,6 @@
   <div class="card">
     <div class="corner-ornament">⚜ ⚜ ⚜</div>
 
-    <!-- Заголовок -->
     <div class="title">
       <span class="title-icon">🗡</span>
       <span>Текстовые Правила</span>
@@ -406,7 +399,6 @@
 
     <div class="divider"></div>
 
-    <!-- Список правил -->
     <div class="rules-list">
       <!-- 1.1 -->
       <div class="rule-item">
@@ -426,7 +418,7 @@
       <div class="rule-item">
         <div class="rule-header">
           <span class="rule-id">1.2</span>
-          <span class="rule-text">Запрещены шутки, рофлы в сторону <strong>администрации</strong>(Искл. если члены администрации не против).</span>
+          <span class="rule-text">Запрещены шутки, рофлы в сторону <strong>администрации</strong> (искл. если члены администрации не против).</span>
         </div>
         <div class="rule-penalty">
           <span class="penalty-badge"><i>⚖</i> Наказание</span>
@@ -533,9 +525,36 @@
           <span class="penalty-value ban">30 дней</span>
         </div>
       </div>
+
+      <!-- 1.10 -->
+      <div class="rule-item">
+        <div class="rule-header">
+          <span class="rule-id">1.10</span>
+          <span class="rule-text">Запрещены <strong>оскорбления</strong> и унижение других участников сервера. Относитесь друг к другу с уважением.</span>
+        </div>
+        <div class="rule-penalty">
+          <span class="penalty-badge"><i>⚖</i> Наказание</span>
+          <span class="penalty-value">Мут</span>
+          <span class="penalty-badge"><i>⏳</i> Длительность</span>
+          <span class="penalty-value">6 часов</span>
+        </div>
+      </div>
+
+      <!-- 1.11 -->
+      <div class="rule-item">
+        <div class="rule-header">
+          <span class="rule-id">1.11</span>
+          <span class="rule-text">Запрещены <strong>оскорбления родных и близких</strong> участников сервера. Это считается особо тяжким нарушением и карается максимально строго.</span>
+        </div>
+        <div class="rule-penalty">
+          <span class="penalty-badge"><i>⚖</i> Наказание</span>
+          <span class="penalty-value ban">Мут</span>
+          <span class="penalty-badge"><i>⏳</i> Длительность</span>
+          <span class="penalty-value ban">12 часов</span>
+        </div>
+      </div>
     </div>
 
-    <!-- Нижняя часть -->
     <div class="footer-note">
       <div style="display: flex; gap: 0.8rem; align-items: center;">
         <span style="opacity: 0.5;">✧</span>
@@ -546,7 +565,6 @@
       </div>
     </div>
 
-    <!-- тонкая неоновая линия -->
     <div style="position: absolute; bottom: -1px; left: 30%; width: 40%; height: 2px; background: radial-gradient(circle, rgba(200,70,70,0.2) 0%, transparent 80%); border-radius: 100%; filter: blur(2px);"></div>
   </div>
 </body>
