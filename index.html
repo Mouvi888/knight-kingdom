@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация — Knight Kingdom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 20% 10%, rgba(88, 101, 242, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 90%, rgba(88, 101, 242, 0.1) 0%, transparent 50%);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Верхняя навигация */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #a78bfa;
+        }
+
+        .back-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .page-title-small {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+        }
+
+        /* Заголовок */
+        .page-header {
+            padding: 30px 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .page-header-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #5865F2, #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 30px rgba(88, 101, 242, 0.4);
+        }
+
+        .page-header-icon svg {
+            width: 38px;
+            height: 38px;
+            fill: #fff;
+        }
+
+        .page-header-text h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+        }
+
+        .page-header-text p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+        }
+
+        /* Аккордеон */
+        .accordion {
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 30px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.3s ease;
+            gap: 16px;
+        }
+
+        .accordion-header:hover {
+            background: rgba(88, 101, 242, 0.08);
+        }
+
+        .accordion-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .accordion-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: rgba(88, 101, 242, 0.15);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+        }
+
+        .accordion-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #5865F2;
+        }
+
+        .accordion-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .accordion-subtitle {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 3px;
+        }
+
+        .accordion-arrow {
+            width: 26px;
+            height: 26px;
+            fill: rgba(255, 255, 255, 0.6);
+            transition: transform 0.35s ease;
+            flex-shrink: 0;
+        }
+
+        .accordion.open .accordion-arrow {
+            transform: rotate(180deg);
+            fill: #a78bfa;
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .accordion-inner {
+            padding: 0 30px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        /* Подраздел */
+        .subsection-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #a78bfa;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subsection-title svg {
+            width: 20px;
+            height: 20px;
+            fill: #a78bfa;
+        }
+
+        /* Список каналов / ролей */
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            list-style: none;
+        }
+
+        .item-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.85);
+            transition: all 0.25s ease;
+        }
+
+        .item-list li:hover {
+            border-color: rgba(88, 101, 242, 0.35);
+            background: rgba(88, 101, 242, 0.06);
+            transform: translateX(3px);
+        }
+
+        .item-emoji {
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .item-list a {
+            color: #a78bfa;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed rgba(167, 139, 250, 0.4);
+            transition: all 0.25s;
+            padding: 0 2px;
+        }
+
+        .item-list a:hover {
+            color: #5865F2;
+            border-bottom-color: #5865F2;
+        }
+
+        .item-list strong {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Экономика */
+        .eco-block {
+            background: rgba(88, 101, 242, 0.06);
+            border-left: 4px solid #5865F2;
+            border-radius: 0 14px 14px 0;
+            padding: 18px 22px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .eco-block strong {
+            color: #fff;
+        }
+
+        .eco-command {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(88, 101, 242, 0.35);
+            color: #a78bfa;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 2px 10px;
+            border-radius: 8px;
+            margin-right: 6px;
+        }
+
+        .eco-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            list-style: none;
+        }
+
+        .eco-list li {
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+            transition: all 0.25s ease;
+        }
+
+        .eco-list li:hover {
+            border-color: rgba(88, 101, 242, 0.35);
+            background: rgba(88, 101, 242, 0.06);
+        }
+
+        .eco-list em {
+            color: #f0b232;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        .eco-note {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.45);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* Футер */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer a {
+            color: #5865F2;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #a78bfa;
+        }
+
+        @media (max-width: 700px) {
+            .page-header {
+                padding: 24px 22px;
+            }
+            .page-header-text h1 {
+                font-size: 1.6rem;
+            }
+            .accordion-header {
+                padding: 18px 20px;
+            }
+            .accordion-title {
+                font-size: 1.1rem;
+            }
+            .accordion-inner {
+                padding: 0 20px 22px;
+            }
+            .accordion-icon {
+                width: 38px;
+                height: 38px;
+            }
+            .accordion-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Навигация -->
+        <div class="top-nav glass">
+            <a href="index.html" class="back-link">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                На главную
+            </a>
+            <span class="page-title-small">Knight Kingdom • Информация</span>
+        </div>
+
+        <!-- Заголовок -->
+        <div class="page-header glass">
+            <div class="page-header-icon">
+                <svg viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+            </div>
+            <div class="page-header-text">
+                <h1>Информация о сервере</h1>
+                <p>Каналы, роли и экономика Knight Kingdom</p>
+            </div>
+        </div>
+
+        <!-- ============ КАНАЛЫ ============ -->
+        <div class="accordion glass" id="acc-channels">
+            <div class="accordion-header" onclick="toggleAccordion('acc-channels')">
+                <div class="accordion-header-left">
+                    <div class="accordion-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                    </div>
+                    <div>
+                        <div class="accordion-title">Каналы</div>
+                        <div class="accordion-subtitle">Информация • Чаты • Голосовые • Партнёрства</div>
+                    </div>
+                </div>
+                <svg class="accordion-arrow" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            </div>
+            <div class="accordion-body">
+                <div class="accordion-inner">
+
+                    <!-- Информация -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+                            Информация:
+                        </div>
+                        <ul class="item-list">
+                            <li><span class="item-emoji">📕</span><span><a href="#">#II правила</a> — канал с правилами сервера.</span></li>
+                            <li><span class="item-emoji">📖</span><span><a href="#">#II информация</a> — канал с информацией о сервере.</span></li>
+                            <li><span class="item-emoji">📢</span><span><a href="#">#II новости</a> — канал с новостями, розыгрышами и т.д.</span></li>
+                            <li><span class="item-emoji">🎫</span><span><a href="#">#II тикеты</a> — тикеты: помощь, жалобы, идеи и набор в администрацию.</span></li>
+                            <li><span class="item-emoji">🤗</span><span><a href="#">#II welcome</a> — канал с приветствием новых участников.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Чаты -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                            Чаты:
+                        </div>
+                        <ul class="item-list">
+                            <li><span class="item-emoji">💬</span><span><a href="#">#II чат</a> — основной чат для общения.</span></li>
+                            <li><span class="item-emoji">🎨</span><span><a href="#">#II медиа</a> — канал с медиа, вы можете опубликовать туда любую пикчу или видео.</span></li>
+                            <li><span class="item-emoji">🌐</span><span><a href="#">#II межсерверный-чат</a> — чат где вы можете пообщаться с людьми с других серверов. (если вы хотите добавить свой сервер туда то напишите в личные сообщения королю сервера — <strong>@Mowi</strong>)</span></li>
+                            <li><span class="item-emoji">🗑️</span><span><a href="#">#II корзина</a> — чат для команд, флуда и прочих сообщений.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Голосовые -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
+                            Голосовые:
+                        </div>
+                        <ul class="item-list">
+                            <li><span class="item-emoji">🔊</span><span><a href="#">#II чулан</a> — голосовой канал на двух людей.</span></li>
+                            <li><span class="item-emoji">🔊</span><span><a href="#">#II винный погреб</a> — голосовой канал на четырех людей.</span></li>
+                            <li><span class="item-emoji">🔊</span><span><a href="#">#II сокровищница</a> — голосовой канал на 15 человек.</span></li>
+                            <li><span class="item-emoji">🔊</span><span><a href="#">#II таверна</a> — голосовой канал на 10 человек.</span></li>
+                            <li><span class="item-emoji">🔊</span><span><a href="#">#II тронный зал</a> — обычный голосовой канал.</span></li>
+                            <li><span class="item-emoji">🔊</span><span><a href="#">#II дворцовая площадь</a> — голосовой канал с играющим там lo-fi radio.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Партнёрства -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                            Партнерства:
+                        </div>
+                        <ul class="item-list">
+                            <li><span class="item-emoji">🤝</span><span><a href="#">#II партнёры</a> — партнёры нашего сервера.</span></li>
+                            <li><span class="item-emoji">💫</span><span><a href="#">#II союзы</a> — союзы нашего сервера.</span></li>
+                            <li><span class="item-emoji">📨</span><span><a href="#">#II авто-партнерка</a> — авто-партнерства.</span></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ РОЛИ ============ -->
+        <div class="accordion glass" id="acc-roles">
+            <div class="accordion-header" onclick="toggleAccordion('acc-roles')">
+                <div class="accordion-header-left">
+                    <div class="accordion-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    </div>
+                    <div>
+                        <div class="accordion-title">Роли</div>
+                        <div class="accordion-subtitle">Администрация • За время • Уровневые • Прочие</div>
+                    </div>
+                </div>
+                <svg class="accordion-arrow" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            </div>
+            <div class="accordion-body">
+                <div class="accordion-inner">
+
+                    <!-- Администрация -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                            Администрация:
+                        </div>
+                        <ul class="item-list">
+                            <li><span class="item-emoji">👑</span><span><a href="#">@Король</a> — владелец и создатель сервера. (Овнер)</span></li>
+                            <li><span class="item-emoji">🎩</span><span><a href="#">@Принц</a> — заместитель владельца сервера. (Со-овнер)</span></li>
+                            <li><span class="item-emoji">⚙️</span><span><a href="#">@Тех.Админ</a> — технический администратор, настройка ботов и прочего.</span></li>
+                            <li><span class="item-emoji">💎</span><span><a href="#">@Куратор</a> — куратор, проводит обзвоны и отвечает за набор администрации, может выдавать выговоры.</span></li>
+                            <li><span class="item-emoji">🛡️</span><span><a href="#">@Стражник</a> — старший модератор, его решениям должны следовать нижестоящие модераторы.</span></li>
+                            <li><span class="item-emoji">⚔️</span><span><a href="#">@Терцир</a> — обычный модератор.</span></li>
+                            <li><span class="item-emoji">🔰</span><span><a href="#">@Мл.Модератор</a> — младший модератор.</span></li>
+                            <li><span class="item-emoji">🥇</span><span><a href="#">@Куратор хелперов</a> — куратор хелперов, отвечает за их набор и дает им указания и т.п.</span></li>
+                            <li><span class="item-emoji">🎖️</span><span><a href="#">@Ст.Хелпер</a> — старший хелпер, помимо всех остальных обязанностей хелпера, обязан сообщать старшим по должности (во время их отсутствия) о нарушениях в чате.</span></li>
+                            <li><span class="item-emoji">🔑</span><span><a href="#">@Хелпер</a> — хелпер, помогает новичкам, приветствует новых участников и поддерживает актив в чате.</span></li>
+                            <li><span class="item-emoji">🎉</span><span><a href="#">@Пиар менеджер</a> — пиар менеджер, отвечает за рекламу и пиар сервера.</span></li>
+                            <li><span class="item-emoji">🧑‍💼</span><span><a href="#">@Персонал</a> — общая роль всех членов персонала.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Роли за время -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                            Роли за время на сервере:
+                        </div>
+                        <ul class="item-list">
+                            <li><span class="item-emoji">🧙</span><span><a href="#">@Королевский советник</a> — роль за 1 год проведённый на сервере.</span></li>
+                            <li><span class="item-emoji">🥷</span><span><a href="#">@Придворный</a> — роль за 6 месяцев проведённых на сервере.</span></li>
+                            <li><span class="item-emoji">⚜️</span><span><a href="#">@Страх Королевства</a> — роль за 3 месяца проведённых на сервере.</span></li>
+                            <li><span class="item-emoji">🚶</span><span><a href="#">@Странник</a> — роль за 1 месяц проведённый на сервере.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Уровневые роли -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                            Уровневые роли:
+                        </div>
+                        <ul class="item-list">
+                            <li><span class="item-emoji">🌟</span><span><a href="#">@Старейшина</a> — роль за 35 уровень.</span></li>
+                            <li><span class="item-emoji">💫</span><span><a href="#">@Телепат</a> — роль за 25 уровень.</span></li>
+                            <li><span class="item-emoji">💠</span><span><a href="#">@Целитель</a> — роль за 20 уровень.</span></li>
+                            <li><span class="item-emoji">🔥</span><span><a href="#">@Пиромант</a> — роль за 10 уровень.</span></li>
+                            <li><span class="item-emoji">💀</span><span><a href="#">@Некромант</a> — роль за 5 уровень.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Прочие роли -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            Прочие роли:
+                        </div>
+                        <ul class="item-list">
+                            <li><span class="item-emoji">🧑‍🌾</span><span><a href="#">@Крестьянин</a> — обычная роль всех участников.</span></li>
+                            <li><span class="item-emoji">🛒</span><span><a href="#">@Купец</a> — роль для поддержавших сервер бустом.</span></li>
+                        </ul>
+                        <div class="eco-note">Цветные роли, роли для пинга и экономические роли не указаны здесь.</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ ЭКОНОМИКА ============ -->
+        <div class="accordion glass" id="acc-economy">
+            <div class="accordion-header" onclick="toggleAccordion('acc-economy')">
+                <div class="accordion-header-left">
+                    <div class="accordion-icon">
+                        <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                    </div>
+                    <div>
+                        <div class="accordion-title">Экономика</div>
+                        <div class="accordion-subtitle">Заработок • Траты • Команды</div>
+                    </div>
+                </div>
+                <svg class="accordion-arrow" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            </div>
+            <div class="accordion-body">
+                <div class="accordion-inner">
+
+                    <div class="eco-block">
+                        В нашем королевстве каждый трудящийся достоин награды! Золото здесь не падает с неба — его добывают честным трудом и верностью короне.
+                    </div>
+
+                    <!-- Как заработать -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                            Как заработать:
+                        </div>
+                        <ul class="eco-list">
+                            <li><span class="eco-command">a.work</span> Отправляйся на работы. Труд облагораживает королевство и приносит звонкую монету!</li>
+                            <li><span class="eco-command">a.timeLy</span> Твой регулярный бонус.</li>
+                            <li><span class="eco-command">a.daily</span> Каждый день королевский двор раздаёт дары! Заходи каждый день и забирай свою дневную порцию золота.</li>
+                            <li><span class="eco-command">a.weekly</span> Недельная раздача золота! Раз в семь дней получай бонус за то, что остаёшься с нами.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Как потратить -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                            Как потратить:
+                        </div>
+                        <ul class="eco-list">
+                            <li><span class="eco-command">a.shop</span> Загляни в лавку старого купца! Здесь ты можешь обменять накопленное золото на различные роли с разными способностями и многое другое. Стань тем, кто выделяется среди простолюдинов!</li>
+                        </ul>
+                    </div>
+
+                    <!-- Прочие возможности -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 9h-2V7h-2v5H6v2h2v5h2v-5h2v5h2v-5h2v-2h-2V7h-2v5z"/></svg>
+                            Прочие возможности:
+                        </div>
+                        <ul class="eco-list">
+                            <li><span class="eco-command">a.pay</span> Срочно нужны деньги твоему верному товарищу? С помощью этой команды ты можешь передать деньги ему! <em>Комиссия составляет 5% от переведенной суммы.</em></li>
+                            <li><span class="eco-command">a.rob</span> Никогда не лежала душа к обычной работе? Стань прытливым гоблином вором который может красть деньги у обычных крестьян.</li>
+                            <li><span class="eco-command">a.balance</span> Посмотри свой общий баланс из трёх карманов и твоих денег из королевского банка.</li>
+                            <li><span class="eco-command">a.deposit</span> Думаешь что какой-нибудь гоблин сопрет деньги из твоего кармана? Положи их в банк! <em>Комиссия составляет 5% от переведенной суммы.</em></li>
+                            <li><span class="eco-command">a.withdraw</span> Забери деньги из банка если тебе нужно что то купить. <em>Комиссия составляет 5% от переведенной суммы.</em></li>
+                        </ul>
+                    </div>
+
+                    <!-- Азартные игры -->
+                    <div>
+                        <div class="subsection-title">
+                            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7.5 7.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5S6 9.83 6 9s.67-1.5 1.5-1.5zm0 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm9-9c-.83 0-1.5-.67-1.5-1.5S15.67 4.5 16.5 4.5 18 5.17 18 6s-.67 1.5-1.5 1.5zm0 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                            Азартные игры:
+                        </div>
+                        <ul class="eco-list">
+                            <li><span class="eco-command">a.slots</span> Обычная игра в рулетку.</li>
+                            <li><span class="eco-command">a.blackjack</span> Игра в блэкджек.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Футер -->
+        <div class="footer">
+            © 2025 Knight Kingdom • <a href="https://discord.gg/eYDYJFHSyZ" target="_blank" rel="noopener">Присоединиться</a>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleAccordion(id) {
+            const accordion = document.getElementById(id);
+            const body = accordion.querySelector('.accordion-body');
+            const isOpen = accordion.classList.contains('open');
+
+            if (isOpen) {
+                // Закрываем
+                body.style.maxHeight = '0';
+                accordion.classList.remove('open');
+            } else {
+                // Открываем
+                accordion.classList.add('open');
+                body.style.maxHeight = body.scrollHeight + 'px';
+            }
+        }
+
+        // Пересчёт высоты при изменении размера окна (для открытых аккордеонов)
+        window.addEventListener('resize', () => {
+            document.querySelectorAll('.accordion.open .accordion-body').forEach(body => {
+                body.style.maxHeight = body.scrollHeight + 'px';
+            });
+        });
+    </script>
+
+</body>
+</html>
