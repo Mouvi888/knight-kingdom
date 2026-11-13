@@ -374,7 +374,7 @@
             height: 22px;
             fill: var(--accent);
             flex-shrink: 0;
-            transition: fill 0.3s ease; /* Убрали вращение */
+            transition: fill 0.3s ease;
         }
 
         /* Кнопка поддержки */
@@ -628,7 +628,7 @@
             .header { flex-direction: column; align-items: flex-start; padding: 20px; }
             .header-actions { width: 100%; flex-direction: column; align-items: stretch; }
             .invite-btn, .support-btn { justify-content: center; width: 100%; }
-            .theme-toggle { width: 100%; } /* На мобилках кнопка темы на всю ширину */
+            .theme-toggle { width: 100%; }
             .stats-title { font-size: 1.6rem; }
         }
     </style>
@@ -745,7 +745,7 @@
     </div>
 
     <script>
-        // ================= ПЕРЕКЛЮЧЕНИЕ ТЕМ (ОДНА КНОПКА) =================
+        // ================= ПЕРЕКЛЮЧЕНИЕ ТЕМ =================
         
         // Порядок переключения
         const themeCycle = ['blue', 'onyx', 'discord', 'light'];
@@ -795,7 +795,8 @@
                     document.querySelector('.header-info h2').textContent = data.name;
                 }
                 
-                document.getElementById('boost-count').textContent = 2 уровень буста; 
+                // ИСПРАВЛЕНО: было "2 уровень буста" (синтаксическая ошибка)
+                document.getElementById('boost-count').textContent = '13';
             } catch (error) {
                 console.warn('Не удалось загрузить статистику:', error);
                 document.getElementById('online-count').textContent = 'Сервер активен';
