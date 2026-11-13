@@ -93,6 +93,87 @@
             position: relative;
         }
 
+        /* ================= ПРЕЛОАДЕР ================= */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(10, 10, 15, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 20px;
+        }
+
+        .dot {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            animation: wave 1.5s ease-in-out infinite;
+        }
+
+        .dot svg {
+            width: 30px;
+            height: 30px;
+            transition: transform 0.3s;
+        }
+
+        /* Индивидуальные цвета и свечения для иконок */
+        .dot:nth-child(1) svg { fill: #f0b232; filter: drop-shadow(0 0 10px rgba(240, 178, 50, 0.8)); } /* Корона */
+        .dot:nth-child(2) svg { fill: #e0e0e0; filter: drop-shadow(0 0 10px rgba(224, 224, 224, 0.8)); } /* Меч */
+        .dot:nth-child(3) svg { fill: #ffffff; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)); } /* Череп */
+        .dot:nth-child(4) svg { fill: #a78bfa; filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.8)); } /* Посох */
+        .dot:nth-child(5) svg { fill: #5865F2; filter: drop-shadow(0 0 10px rgba(88, 101, 242, 0.8)); } /* Шлем */
+
+        /* Задержки для эффекта волны */
+        .dot:nth-child(1) { animation-delay: 0s; }
+        .dot:nth-child(2) { animation-delay: 0.15s; }
+        .dot:nth-child(3) { animation-delay: 0.3s; }
+        .dot:nth-child(4) { animation-delay: 0.45s; }
+        .dot:nth-child(5) { animation-delay: 0.6s; }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .loader-text {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 30px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            animation: pulse-text 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-text {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.98); }
+        }
+
         /* Анимированные фоновые пятна */
         .blob {
             position: fixed;
@@ -325,7 +406,6 @@
             flex-wrap: wrap;
         }
 
-        /* ОДНА КНОПКА СМЕНЫ ТЕМЫ (Только иконка) */
         .theme-toggle {
             display: inline-flex;
             align-items: center;
@@ -377,7 +457,6 @@
             transition: fill 0.3s ease;
         }
 
-        /* Кнопка поддержки */
         .support-btn {
             display: inline-flex;
             align-items: center;
@@ -411,7 +490,6 @@
             transform: scale(1.15);
         }
 
-        /* Кнопка приглашения */
         .invite-btn {
             display: inline-flex;
             align-items: center;
@@ -630,10 +708,42 @@
             .invite-btn, .support-btn { justify-content: center; width: 100%; }
             .theme-toggle { width: 100%; }
             .stats-title { font-size: 1.6rem; }
+            
+            /* Уменьшаем размер точек на мобильных */
+            .loader-dots { gap: 10px; }
+            .dot { width: 45px; height: 45px; }
+            .dot svg { width: 22px; height: 22px; }
         }
     </style>
 </head>
 <body data-theme="blue">
+
+    <!-- ПРЕЛОАДЕР -->
+    <div id="preloader">
+        <div class="loader-dots">
+            <!-- Корона -->
+            <div class="dot">
+                <svg viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
+            </div>
+            <!-- Меч -->
+            <div class="dot">
+                <svg viewBox="0 0 24 24"><path d="M6.92 5H5l9 9 1-.94-8.08-8.06zM19 3l-3 3 1.5 1.5L14 11l-1.5-1.5-1.5 1.5 3 3 1.5-1.5L17 14l3-3 1.5 1.5L23 11l-4-8z"/></svg>
+            </div>
+            <!-- Череп -->
+            <div class="dot">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-3 8c-.83 0-1.5-.67-1.5-1.5S8.17 7 9 7s1.5.67 1.5 1.5S9.83 10 9 10zm6 0c-.83 0-1.5-.67-1.5-1.5S14.17 7 15 7s1.5.67 1.5 1.5S15.83 10 15 10zM9 19v2h2v-2H9zm4 0v2h2v-2h-2z"/></svg>
+            </div>
+            <!-- Посох -->
+            <div class="dot">
+                <svg viewBox="0 0 24 24"><path d="M14.5 2.5l-1.4 1.4 7 7 1.4-1.4-7-7zm-2.8 2.8l-1.4 1.4 1.4 1.4 1.4-1.4-1.4-1.4zm-2.8 2.8l-1.4 1.4 1.4 1.4 1.4-1.4-1.4-1.4zm-2.8 2.8l-1.4 1.4 7 7 1.4-1.4-7-7zM3 21l1.4-1.4-1.4-1.4L1.6 19.6 3 21z"/></svg>
+            </div>
+            <!-- Рыцарский шлем -->
+            <div class="dot">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12v8c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-8c0-5.52-4.48-10-10-10zm0 2c4.42 0 8 3.58 8 8v2H4v-2c0-4.42 3.58-8 8-8zm-4 10h8v4H8v-4z"/></svg>
+            </div>
+        </div>
+        <div class="loader-text">Knight Kingdom</div>
+    </div>
 
     <!-- Анимированный фон -->
     <div class="blob blob-1"></div>
@@ -745,18 +855,27 @@
     </div>
 
     <script>
+        // ================= ПРЕЛОАДЕР =================
+        document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('preloader');
+            // Генерируем случайное время от 2000 до 5000 мс (2-5 секунд)
+            const delay = Math.floor(Math.random() * 3000) + 2000;
+
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+                setTimeout(() => {
+                    preloader.remove();
+                }, 600); 
+            }, delay);
+        });
+
         // ================= ПЕРЕКЛЮЧЕНИЕ ТЕМ =================
-        
-        // Порядок переключения
         const themeCycle = ['blue', 'onyx', 'discord', 'light'];
 
         function setTheme(themeName) {
-            // Меняем атрибут на body
             document.body.setAttribute('data-theme', themeName);
-            // Сохраняем выбор
             localStorage.setItem('theme', themeName);
 
-            // Меняем тему виджета Discord
             const widgetIframe = document.querySelector('.widget-container iframe');
             if (widgetIframe) {
                 const currentSrc = widgetIframe.src;
@@ -770,13 +889,10 @@
         function cycleTheme() {
             const current = document.body.getAttribute('data-theme') || 'blue';
             const idx = themeCycle.indexOf(current);
-            // Переключаем на следующую в списке (по кругу)
             const next = themeCycle[(idx + 1) % themeCycle.length];
-            
             setTheme(next);
         }
 
-        // Инициализация при загрузке
         const savedTheme = localStorage.getItem('theme') || 'blue';
         setTheme(savedTheme);
 
@@ -795,7 +911,6 @@
                     document.querySelector('.header-info h2').textContent = data.name;
                 }
                 
-                // ИСПРАВЛЕНО: было "2 уровень буста" (синтаксическая ошибка)
                 document.getElementById('boost-count').textContent = '13';
             } catch (error) {
                 console.warn('Не удалось загрузить статистику:', error);
